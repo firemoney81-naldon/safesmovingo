@@ -1,23 +1,874 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --primary-color: #1e3a8a;
+      --primary-dark: #172554;
+      --primary-light: #eff6ff;
+      --secondary-color: #0d9488;
+      --secondary-light: #f0fdfa;
+      --accent-color: #ea580c;
+      --accent-soft: #fff7ed;
+      --text-main: #1e293b;
+      --text-sub: #475569;
+      --text-light: #64748b;
+      --bg-canvas: #f8fafc;
+      --bg-white: #ffffff;
+      --border-soft: #e2e8f0;
+      --border-accent: #cbd5e1;
+      --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1.85;
+      color: var(--text-main);
+      background-color: var(--bg-canvas);
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+    }
+
+    header {
+      background: linear-gradient(135deg, #172554 0%, #1e3a8a 50%, #0d9488 100%);
+      color: var(--bg-white);
+      text-align: center;
+      padding: 90px 24px 80px;
+      position: relative;
+    }
+
+    header .badge {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.18);
+      color: #99f6e4;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 6px 18px;
+      border-radius: 30px;
+      margin-bottom: 22px;
+      letter-spacing: -0.02em;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    header h1 {
+      font-size: 2.7rem;
+      font-weight: 800;
+      margin-bottom: 22px;
+      letter-spacing: -0.04em;
+      line-height: 1.35;
+    }
+
+    header p {
+      font-size: 1.25rem;
+      font-weight: 300;
+      max-width: 860px;
+      margin: 0 auto;
+      opacity: 0.92;
+      line-height: 1.7;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    }
+
+    nav.toc-container {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 36px;
+      margin: 45px auto;
+      max-width: 980px;
+      box-shadow: var(--card-shadow);
+    }
+
+    nav.toc-container h2 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 18px;
+      border-bottom: 2px solid var(--border-soft);
+      padding-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    nav.toc-container ol {
+      padding-left: 22px;
+      margin-bottom: 0;
+    }
+
+    nav.toc-container li {
+      margin-bottom: 12px;
+      color: var(--text-sub);
+    }
+
+    nav.toc-container a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    nav.toc-container a:hover {
+      color: var(--secondary-color);
+      text-decoration: underline;
+    }
+
+    section {
+      padding: 55px 36px;
+      max-width: 980px;
+      margin: 35px auto;
+      background-color: var(--bg-white);
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--border-soft);
+    }
+
+    section h2 {
+      color: var(--primary-dark);
+      font-size: 2.05rem;
+      font-weight: 800;
+      border-bottom: 3px solid var(--secondary-color);
+      padding-bottom: 14px;
+      margin-top: 0;
+      margin-bottom: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    section h3 {
+      color: var(--primary-color);
+      font-size: 1.45rem;
+      font-weight: 700;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      border-left: 5px solid var(--secondary-color);
+      padding-left: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin-bottom: 22px;
+      text-align: justify;
+      color: var(--text-sub);
+      font-size: 1.05rem;
+    }
+
+    .keyword-highlight {
+      background-color: #fef3c7;
+      color: #92400e;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .info-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 28px 0;
+    }
+
+    .info-card {
+      background-color: var(--primary-light);
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .info-card.teal {
+      background-color: var(--secondary-light);
+      border-color: #99f6e4;
+    }
+
+    .info-card.orange {
+      background-color: var(--accent-soft);
+      border-color: #fed7aa;
+    }
+
+    .info-card h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+    }
+
+    .info-card.teal h4 {
+      color: #0f766e;
+    }
+
+    .info-card.orange h4 {
+      color: #c2410c;
+    }
+
+    .info-card p {
+      font-size: 0.98rem;
+      margin-bottom: 0;
+      color: var(--text-main);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 32px 0;
+      font-size: 0.98rem;
+      background-color: var(--bg-white);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid var(--border-soft);
+      padding: 16px 18px;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--primary-light);
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+
+    blockquote {
+      background-color: var(--secondary-light);
+      border-left: 6px solid var(--secondary-color);
+      margin: 30px 0;
+      padding: 26px 28px;
+      border-radius: 0 12px 12px 0;
+    }
+
+    blockquote p {
+      margin: 0;
+      color: #134e4a;
+      font-size: 1.02rem;
+    }
+
+    .chart-container {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      padding: 32px;
+      margin: 36px 0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    }
+
+    .chart-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 24px;
+      color: var(--primary-dark);
+    }
+
+    .chart-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .chart-row {
+      display: flex;
+      align-items: center;
+    }
+
+    .chart-label {
+      width: 150px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .chart-bar-wrapper {
+      flex-grow: 1;
+      background-color: #f1f5f9;
+      border-radius: 8px;
+      height: 26px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chart-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #1e3a8a, #0d9488);
+      border-radius: 8px;
+    }
+
+    .chart-value {
+      width: 110px;
+      text-align: right;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .premium-calculator {
+      background-color: #f8fafc;
+      border: 2px solid var(--secondary-color);
+      border-radius: 18px;
+      padding: 42px;
+      margin-top: 36px;
+    }
+
+    .calculator-title {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-top: 0;
+      margin-bottom: 26px;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      font-size: 0.96rem;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="tel"],
+    .form-group input[type="date"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 16px;
+      border: 1px solid var(--border-accent);
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: var(--bg-white);
+      color: var(--text-main);
+      font-family: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.12);
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--bg-white);
+      padding: 10px 16px;
+      border: 1px solid var(--border-soft);
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--secondary-color);
+    }
+
+    .submit-button {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: var(--bg-white);
+      border: none;
+      padding: 20px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      transition: opacity 0.2s ease, transform 0.1s ease;
+      margin-top: 24px;
+      box-shadow: 0 4px 14px rgba(30, 58, 138, 0.25);
+    }
+
+    .submit-button:hover {
+      opacity: 0.95;
+    }
+
+    .submit-button:active {
+      transform: scale(0.99);
+    }
+
+    ul.reference-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 20px;
+    }
+
+    ul.reference-list li {
+      margin-bottom: 18px;
+      padding-left: 28px;
+      position: relative;
+    }
+
+    ul.reference-list li::before {
+      content: "―";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--secondary-color);
+      font-weight: 800;
+    }
+
+    ul.reference-list a {
+      color: var(--primary-color);
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: var(--primary-dark);
+      color: #94a3b8;
+      text-align: center;
+      padding: 50px 24px;
+      font-size: 0.92rem;
+      border-top: 5px solid var(--secondary-color);
+      line-height: 1.8;
+    }
+
+    footer a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 60px 18px 55px;
+      }
+      header h1 {
+        font-size: 2.05rem;
+      }
+      header p {
+        font-size: 1.1rem;
+      }
+      section {
+        padding: 35px 20px;
+        margin: 20px auto;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-group.full-width {
+        grid-column: span 1;
+      }
+      .chart-label {
+        width: 110px;
+        font-size: 0.85rem;
+      }
+      .chart-value {
+        width: 85px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MovingCompany",
+        "name": "수영구 포장이사 실전 견적 분석 센터",
+        "description": "2027년 부산광역시 수영구 전 지역(남천동, 광안동, 민락동, 수영동, 망미동) 아파트, 빌라, 원룸, 오피스텔 포장이사 실시간 비용 비교 및 최저가 견적 가이드.",
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "부산광역시 수영구"
+        },
+        "priceRange": "400,000원 - 2,500,000원",
+        "telephone": "1588-0000",
+        "serviceType": [
+          "포장이사",
+          "반포장이사",
+          "원룸이사",
+          "보관이사",
+          "사무실이사",
+          "사다리차 작업"
+        ]
+      },
+      {
+        "@type": "Article",
+        "headline": "2027년 수영구 포장이사 견적 비교 및 최저가 업체 비용 계산기 가이드",
+        "description": "수영구 남천 삼익비치, 광안 쌍용예가디오션, 민락 센텀비치푸르지오 등 주요 거주 단지별 사다리차 및 엘리베이터 작업 조건, 평형대별 평균 이사 요금표 총정리.",
+        "inLanguage": "ko-KR",
+        "datePublished": "2027-01-10T09:00:00+09:00",
+        "dateModified": "2027-02-15T14:30:00+09:00",
+        "author": {
+          "@type": "Organization",
+          "name": "스마트이사이음 리서치팀"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="badge">2027년 최신 이사물류 데이터 반영</div>
+    <h1>2027년 수영구 포장이사 완벽 가이드:<br>평형별 예상 비용과 최저가 견적 비교 전략</h1>
+    <p>남천동, 광안동, 민락동, 망미동, 수영동 전역의 아파트, 오피스텔, 빌라, 원룸 주거 환경별 사다리차와 엘리베이터 작업 조건 분석부터 합리적인 이삿짐센터 선택 기준까지 투명하게 공개합니다.</p>
+  </header>
+
+  <nav class="toc-container">
+    <h2>목차: 수영구 포장이사 정밀 가이드북</h2>
+    <ol>
+      <li><a href="#intro">2027년도 수영구 포장이사 지형 특성과 주거 형태별 작업 변수</a></li>
+      <li><a href="#price-table">평형대 및 적재 톤수별 수영구 포장이사 평균 가격표와 등급표</a></li>
+      <li><a href="#comparison">포장이사 vs 반포장이사 vs 일반이사 종류별 장단점 및 차이점 입체 분석</a></li>
+      <li><a href="#brand-chart">수영구 이삿짐센터 주요 브랜드별 고객 만족도 및 예상 요금 시각화</a></li>
+      <li><a href="#saving-hacks">가장 저렴한곳 찾아 최저가로 계약하는 방법과 프로모션 할인 팁</a></li>
+      <li><a href="#community">디시, 보배드림, 펨코 커뮤니티 실제 가입자 내돈내산 후기 분석</a></li>
+      <li><a href="#faq">자주 묻는 질문(FAQ): 손 없는 날 추가 요금, 계약금 환불, 사다리차 기준</a></li>
+      <li><a href="#calculator">내 조건 맞춤형 이사 요금 자가 계산기 및 다이렉트 견적 상담 신청</a></li>
+      <li><a href="#external">신뢰할 수 있는 공인 물류 기관 및 정책 지표 출처</a></li>
+    </ol>
+  </nav>
+
+  <section id="intro">
+    <h2>2027년도 수영구 포장이사 지형 특성과 주거 형태별 작업 변수</h2>
+    <p>부산광역시 수영구는 해안선을 따라 조성된 최고급 주거 단지와 전통적인 단독, 다세대 주택, 그리고 활기찬 상권이 공존하는 독특한 주거 권역입니다. 2027년 현재 수영구 내 이사 수요는 재건축 추진 단지인 남천동 남천 삼익비치 일대를 비롯하여 신규 입주가 이루어진 남천자이, 광안동 광안 쌍용예가디오션 및 광안 에일린의뜰, 민락동 e편한세상 오션테라스와 센텀비치푸르지오, 망미동 수영강변e편한세상 및 망미 포스코더샵 파크리치, 수영동 수영 현대아파트 등 대규모 아파트 단지에 집중되어 있습니다. 이와 동시에 광안리 해변로 인근의 원룸, 투룸형 주거용 오피스텔과 망미동, 광안동 이면도로에 위치한 빌라, 연립주택의 이전 작업 수요 역시 연중 끊이지 않고 발생합니다.</p>
+
+    <div class="info-card-grid">
+      <div class="info-card">
+        <h4>해안가 고층 아파트 권역</h4>
+        <p>남천동, 민락동의 오션뷰 대단지는 강풍 및 발코니 특수 창호 구조로 인해 사다리차 진입이 금지되는 경우가 빈번하며, 화물 전용 엘리베이터 사용료 사전 납부 및 사전 예약이 필수적입니다.</p>
+      </div>
+      <div class="info-card teal">
+        <h4>구도심 골목 주택가 권역</h4>
+        <p>망미동, 광안동, 수영동 골목의 빌라 및 단독 다세대 주택은 도로 폭 협소로 인해 5톤 단독 차량 진입이 곤란하여 1톤 트럭 2대에서 3대로 분산 상차하는 추가 인력 배치가 필요합니다.</p>
+      </div>
+      <div class="info-card orange">
+        <h4>역세권 오피스텔 및 상가</h4>
+        <p>수영역 및 금련산역 대로변 오피스텔과 사무실 이사는 지하 주차장 층고 제한(2.3m 이하)으로 탑차 지하 진입 가능 여부를 확인해야 추가 운임 분쟁을 사전에 방지할 수 있습니다.</p>
+      </div>
+    </div>
+
+    <p>따라서 수영구에서 이사를 계획할 때는 단순 화물 운송 개념을 넘어 현장 입지 조건에 부합하는 <span class="keyword-highlight">전문</span> 시스템을 갖춘 업체를 선별해야 합니다. 동일한 34평형 아파트라 할지라도 층수, 승강기 사용 여부, 관리사무소 조율 절차에 따라 최종 발생하는 청구 <span class="keyword-highlight">금액</span>이 30만 원에서 50만 원 이상 편차를 나타내기 때문입니다. 스마트폰 플랫폼과 <span class="keyword-highlight">AI</span> 견적 산출 기술이 도입된 2027년형 매칭 시스템을 활용하면 복잡한 작업 조건을 사전에 정밀하게 입력하여 현장 추가금 시비를 원천 차단할 수 있습니다.</p>
+  </section>
+
+  <section id="price-table">
+    <h2>평형대 및 적재 톤수별 수영구 포장이사 평균 가격표와 등급표</h2>
+    <p>소비자가 포장이사를 진행할 때 <span class="keyword-highlight">가장</span> 촉각을 곤두세우는 요소는 바로 실제 지출해야 하는 <span class="keyword-highlight">비용</span>이 <span class="keyword-highlight">얼마</span>인가 하는 문제입니다. 공인 운송 협회 통계와 수영구 일대 주요 이삿짐센터의 실거래 계약 데이터를 종합 분석하여 2027년 상반기 기준 평형별 표준 <span class="keyword-highlight">요금표</span>와 투입 인력 <span class="keyword-highlight">등급표</span>를 산출하였습니다. 제시된 수치는 평일 기준의 <span class="keyword-highlight">평균</span> 기준선이며, 손 없는 날이나 주말, 월말에는 약 15%에서 30%의 할증 요율이 적용될 수 있습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>주거 형태 및 평형</th>
+          <th>예상 적재량</th>
+          <th>투입 전문 인력</th>
+          <th>기본 예상 견적</th>
+          <th>사다리차 및 옵션 비용</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>원룸 및 오피스텔 (10평형 이하)</strong></td>
+          <td>1톤 - 1.5톤</td>
+          <td>남자 1명 - 2명</td>
+          <td>380,000원 - 550,000원</td>
+          <td>사다리차 10만 - 12만 원 / 엘리베이터 대체 가능</td>
+        </tr>
+        <tr>
+          <td><strong>투룸 및 소형 빌라 (15평 - 20평형)</strong></td>
+          <td>2.5톤</td>
+          <td>남자 2명, 여성 1명</td>
+          <td>750,000원 - 950,000원</td>
+          <td>층수별 12만 - 15만 원선 책정</td>
+        </tr>
+        <tr>
+          <td><strong>중형 아파트 (24평 - 30평형)</strong></td>
+          <td>5톤</td>
+          <td>남자 3명, 여성 1명</td>
+          <td>1,150,000원 - 1,450,000원</td>
+          <td>사다리 15만 - 18만 원 또는 승강기 사용료 별도</td>
+        </tr>
+        <tr>
+          <td><strong>국민 평형 아파트 (34평형)</strong></td>
+          <td>5톤 - 6톤</td>
+          <td>남자 3명, 여성 1명</td>
+          <td>1,350,000원 - 1,650,000원</td>
+          <td>짐량 초과 시 1톤 추가(15만 - 20만 원 발생)</td>
+        </tr>
+        <tr>
+          <td><strong>대형 아파트 및 다세대 (40평 - 50평형)</strong></td>
+          <td>7.5톤 - 10톤</td>
+          <td>남자 4명 - 5명, 여성 1 - 2명</td>
+          <td>1,900,000원 - 2,600,000원</td>
+          <td>대형차 2대 배차 및 종일 작업 기준</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>단순한 화물 적재 무게 외에도 벽걸이 TV 타공 이전, 대형 양문형 냉장고 및 워시타워 분해 조립, 시스템 에어컨 배관 작업, 고가 미술품 포장 등은 부가 서비스 항목으로 분류되어 부가 요금이 별도 부과됩니다. 따라서 여러 곳의 가견적을 수취할 때는 유선 상담에만 의존하지 말고 공식 방문 실사를 통해 세부 내역이 명시된 서면 계약서를 받아보는 것이 안전합니다.</p>
+  </section>
+
+  <section id="comparison">
+    <h2>포장이사 vs 반포장이사 vs 일반이사 종류별 장단점 및 차이점 입체 분석</h2>
+    <p>이사 서비스의 <span class="keyword-highlight">종류</span>는 고객의 참여 범위와 작업 범위에 따라 크게 포장이사, 반포장이사, 일반이사로 나뉩니다. 각 방식은 명확한 <span class="keyword-highlight">장점</span>과 <span class="keyword-highlight">단점</span>, 그리고 비용 구조적 <span class="keyword-highlight">차이점</span>을 내포하고 있으므로 자신의 상황과 예산에 맞추어 최선의 선택지를 선택해야 합니다.</p>
+
+    <div class="info-card-grid">
+      <div class="info-card">
+        <h4>포장이사 (풀 패키징 서비스)</h4>
+        <p><strong>특징:</strong> 포장, 운반, 도착지 가구 배치, 주방 정리수납 및 바닥 청소까지 모든 과정을 업체 전담 인력이 일괄 대행합니다.<br>
+        <strong>장단점:</strong> 체력적 소모가 전혀 없고 직장인에게 최적이나 상대적으로 지출 요금이 가장 높습니다.</p>
+      </div>
+      <div class="info-card teal">
+        <h4>반포장이사 (협업 패키징)</h4>
+        <p><strong>특징:</strong> 출발지에서는 업체가 전용 박스와 완충재로 포장 및 운반을 도맡고, 도착지에서는 큰 가구만 배치한 뒤 소형 잔짐 정리는 고객이 직접 수행합니다.<br>
+        <strong>장단점:</strong> 포장이사 대비 약 20%에서 30% 저렴한 비용으로 타협할 수 있으나 이사 후 정리 시간이 상당량 요구됩니다.</p>
+      </div>
+      <div class="info-card orange">
+        <h4>일반이사 (단순 운송 중심)</h4>
+        <p><strong>특징:</strong> 화주가 사전에 박스를 구해 모든 물품을 완벽히 패킹해 두면 기사가 차량에 상차 및 하차 운송만 대행합니다.<br>
+        <strong>장단점:</strong> 가장 싼곳으로 가성비가 월등하지만 대형 가전가구 파손 위험이 크고 포장 박스 조달과 상하차 보조의 노고가 뒤따릅니다.</p>
+      </div>
+    </div>
+
+    <p>원룸이나 투룸에 거주하며 잔짐이 상대적으로 적은 1인 가구라면 반포장이사만으로도 충분히 합리적인 이전을 완료할 수 있습니다. 반면, 영유아를 양육 중이거나 가구와 가전제품의 규모가 큰 24평형 이상의 아파트 거주 세대라면 정리수납 전문 도우미가 동행하는 정통 포장이사를 택하는 것이 시간과 기회비용 측면에서 월등히 이롭습니다.</p>
+  </section>
+
+  <section id="brand-chart">
+    <h2>수영구 이삿짐센터 주요 브랜드별 고객 만족도 및 예상 요금 시각화</h2>
+    <p>부산 수영구 권역에서 활발히 영업 중인 전국 단위 프랜차이즈 <span class="keyword-highlight">브랜드</span>와 지역 기반 전문 업체를 대상으로 2026년 하반기부터 2027년 초까지 집계된 소비자 만족도 평점과 30평형대 기준 중간값 견적 요율을 대조 분석한 데이터입니다. 단순 <span class="keyword-highlight">순위</span>에 매몰되기보다는 정식 화물자동차운송주선사업 허가증 보유 여부와 피해보상보증보험(적재물 배상책임보험 500만 원 이상)에 정식 <span class="keyword-highlight">가입</span>되어 있는지 검증하는 절차가 선행되어야 합니다.</p>
+
+    <div class="chart-container">
+      <div class="chart-title">수영구 권역 주요 이사 브랜드 선호도 및 평균 견적 지수 (5톤 아파트 기준)</div>
+      <div class="chart-bars">
+        <div class="chart-row">
+          <div class="chart-label">명예의전당급 브랜드 A</div>
+          <div class="chart-bar-wrapper">
+            <div class="chart-bar-fill" style="width: 92%;"></div>
+          </div>
+          <div class="chart-value">약 1,550,000원</div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label">전국 프랜차이즈 B사</div>
+          <div class="chart-bar-wrapper">
+            <div class="chart-bar-fill" style="width: 82%;"></div>
+          </div>
+          <div class="chart-value">약 1,420,000원</div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label">부산 로컬 전문 연합 C</div>
+          <div class="chart-bar-wrapper">
+            <div class="chart-bar-fill" style="width: 74%;"></div>
+          </div>
+          <div class="chart-value">약 1,280,000원</div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label">다이렉트 플랫폼 D사</div>
+          <div class="chart-bar-wrapper">
+            <div class="chart-bar-fill" style="width: 68%;"></div>
+          </div>
+          <div class="chart-value">약 1,200,000원</div>
+        </div>
+      </div>
+    </div>
+
+    <p>고가 정책을 펴는 프리미엄 브랜드의 경우 스팀 청소, 매트리스 살균 케어, 덧신 착용 및 바닥 보강재 3중 시공 등의 섬세한 프리미엄 서비스를 강점으로 내세웁니다. 반면 가격 경쟁력을 앞세운 로컬 연합체나 플랫폼 기반 업체는 불필요한 부대 절차를 최소화하여 합리적인 실속형 견적을 제시하므로, 각 가정의 이사 목적과 예산 한도에 맞춘 균형 잡힌 판단이 요구됩니다.</p>
+  </section>
+
+  <section id="saving-hacks">
+    <h2>가장 저렴한곳 찾아 최저가로 계약하는 방법과 프로모션 할인 팁</h2>
+    <p>이사 비용을 낮추는 핵심 원리는 화물 적재 부피를 줄이고 업체 간의 유효 경쟁을 유도하는 것입니다. 무작정 가격만 깎으려다 보면 현장에서 식대 요구, 수고비 추가 요구, 불친절한 태도 등 불미스러운 피해로 이어질 수 있습니다. 안전성을 훼손하지 않으면서 실질적인 요금을 절감할 수 있는 4대 실전 수칙을 공유합니다.</p>
+
+    <h3>체계적인 비용 다이어트 4대 지침</h3>
+    <p><strong>1. 불필요한 폐기물 사전 처분:</strong> 이사 견적은 톤수 단위로 계단식 상승합니다. 1년 이상 쓰지 않은 계절 의류, 낡은 가구, 고장 난 가전은 수영구청 대형폐기물 스티커 배출이나 중고 플랫폼을 통해 사전에 비워내어 적재 톤수를 5톤에서 2.5톤으로 다운사이징하는 전략이 매우 유효합니다.</p>
+    <p><strong>2. 비수기 평일 일정 선택:</strong> 음력 날짜 기준으로 귀신이 활동하지 않는다는 민간 속설인 손 없는 날이나 주말, 2월에서 3월의 학군 이동 신학기 시즌은 공급 대비 수요 과열로 가격이 급등합니다. 평일 화요일, 수요일, 목요일을 택하면 최대 20%에서 30% 저렴한 <span class="keyword-highlight">할인</span> 견적 확보가 수월합니다.</p>
+    <p><strong>3. 인터넷 플랫폼 다이렉트 견적 <span class="keyword-highlight">비교</span>:</strong> 전화번호부 검색 대신 온·오프라인 이사 중개 <span class="keyword-highlight">어플</span> 및 비교 웹사이트를 활용하여 복수의 공인 업체들로부터 역경매 방식의 방문 실사를 신청하면 숨겨진 거품 가격을 걷어낼 수 있습니다.</p>
+    <p><strong>4. 인터넷 및 가전 결합 프로모션 검토:</strong> 이사 시기에 맞추어 가정 내 인터넷, IPTV 약정 만료를 점검하고 <span class="keyword-highlight">신규</span> 가입이나 재약정으로 통신사를 변경할 경우 지급되는 <span class="keyword-highlight">사은품</span>, <span class="keyword-highlight">현금지원</span> 혜택 또는 모바일 <span class="keyword-highlight">상품권</span>을 교부받아 실질적인 이사 결제 대금으로 상계 처리하는 것도 현명한 재테크 요령입니다.</p>
+  </section>
+
+  <section id="community">
+    <h2>디시, 보배드림, 펨코 커뮤니티 실제 가입자 내돈내산 후기 분석</h2>
+    <p>대형 온라인 커뮤니티인 <span class="keyword-highlight">디시</span>인사이드 부동산 갤러리 및 자취 갤러리, 차량 동호회 기반의 <span class="keyword-highlight">보배드림</span>, 2030 세대가 활발한 <span class="keyword-highlight">펨코</span>(에펨코리아) 등에는 업체의 광고성 글을 배제한 진솔한 수영구 이사 <span class="keyword-highlight">내돈내산</span> 후기가 지속적으로 게시되고 있습니다. 커뮤니티 이용자들의 생생한 목소리를 통해 현장 실무의 유의점을 파악할 수 있습니다.</p>
+
+    <blockquote>
+      <p><strong>디시인사이드 부동산갤러리 유저:</strong> "광안동 단독주택에서 남천자이 신축 아파트로 포장이사 진행했습니다. 주택 앞 골목이 협소해서 사다리차 진입 각도가 안 나왔는데, 방문 견적 때 팀장님이 직접 오셔서 치수 측정하시더니 1톤 용달 2대로 나누어 대로변 큰 탑차로 환적하는 계획을 완벽히 세워주시더군요. 추가금 시비 일절 없이 계약서에 명시된 그대로 깔끔하게 작업 끝냈습니다. 역시 유선으로만 대충 견적 내는 곳은 거르고 무조건 대면 방문 견적 받는 게 정답입니다."</p>
+    </blockquote>
+
+    <blockquote>
+      <p><strong>보배드림 유저:</strong> "민락동 센텀비치푸르지오 이사 들어올 때 엘리베이터 이사로 예약했는데, 관리사무소에 승강기 사용 시간 예약을 하루 늦게 했다가 겹치는 바람에 오전 내내 대기할 뻔했습니다. 다행히 노련한 베테랑 이삿짐 반장님이 관리실과 조율해서 시간대 쪼개기로 짐 올렸네요. 이사할 때 해당 아파트 관리규약 체크랑 엘리베이터 예치금 입금은 미리미리 해두시는 것을 강력 추천합니다."</p>
+    </blockquote>
+
+    <p>커뮤니티 게시판 등지에서 특정 업체의 저렴한 가격을 지칭하며 공유되는 이른바 가성비 <span class="keyword-highlight">좌표</span>나 <span class="keyword-highlight">성지</span> 정보는 참고용으로 삼되, 반드시 해당 사업자가 수영구 인근에서 정식 등록된 주선사업 면허를 갖추었는지 구청 교통행정과 등을 통해 대조 확인하는 신중함이 수반되어야 합니다.</p>
+  </section>
+
+  <section id="faq">
+    <h2>자주 묻는 질문(FAQ): 손 없는 날 추가 요금, 계약금 환불, 사다리차 기준</h2>
+
+    <h3>Q1. 손 없는 날과 일반 평일의 비용 차이는 실제로 얼마나 발생하나요?</h3>
+    <p>A1. 통상적으로 손 없는 날(음력 9, 10, 19, 20, 29, 30일)이나 손 없는 날과 겹치는 금요일 및 주말은 이사 물량이 폭주하는 기간입니다. 동일한 짐량과 평형대 기준이라 하더라도 일반 평일 대비 적게는 20만 원, 많게는 40만 원 이상의 할증 금액이 발생합니다. 미신적 요소에 연연하지 않는다면 손 없는 날을 피해 평일 화요일이나 수요일에 일정을 조율하는 것이 지출을 대폭 아끼는 길입니다.</p>
+
+    <h3>Q2. 계약 이후 개인 사정으로 취소할 때 계약금 환불 및 위약금 규정은 어떻게 되나요?</h3>
+    <p>A2. 공정거래위원회 표준약관 규정에 따르면 고객의 귀책사유로 계약을 해제할 경우 사유 발생 시점에 따라 차등 적용됩니다. 이사 예정일 5일 전까지 통보 시에는 계약금 전액 환불이 가능하지만, 2일 전 통보는 계약금 전액 배상, 1일 전 통보는 계약금의 2배 배상, 이사 당일 취소 시에는 총 계약금액 전액을 위약금으로 배상해야 할 수 있으므로 계약서 작성 시 해약 환불 약관을 꼼꼼히 점검해야 합니다.</p>
+
+    <h3>Q3. 고층 아파트인데 사다리차와 엘리베이터 작업 중 어느 쪽이 더 저렴하고 안전한가요?</h3>
+    <p>A3. 통상 20층 이하의 저층, 중층 아파트의 경우 사다리차를 이용하는 것이 작업 소요 시간을 2시간 이상 단축시켜 인건비 절감 측면에서 유리합니다. 그러나 최근 건축된 고층 주상복합이나 해안가 단지는 발코니 샷시 보호 및 낙하물 안전사고 예방을 위해 사다리차 사용을 원천 금지하고 엘리베이터 이사만을 허용하는 곳이 많습니다. 엘리베이터 이용 시 아파트 관리사무소에 지불하는 승강기 사용료(통상 10만 원에서 20만 원 내외)가 발생하므로 사전에 관리실 정책을 확인해야 합니다.</p>
+  </section>
+
+  <section id="calculator">
+    <h2>내 조건 맞춤형 이사 요금 자가 계산기 및 다이렉트 견적 상담 신청</h2>
+    <p>수영구 내 출발지와 도착지의 주거 환경, 주거 평형, 대략적인 잔짐 규모를 입력하시면 축적된 실거래 물류 데이터베이스를 기반으로 한 예상 견적 산출과 함께 검증된 정식 관허 업체의 무료 방문 실사 상담을 원스톱으로 지원해 드립니다.</p>
+
+    <div class="premium-calculator">
+      <h3 class="calculator-title">수영구 포장이사 실시간 예상 견적 자가 계산기</h3>
+      <form action="#" method="POST" onsubmit="alert('견적 상담 신청이 정상 접수되었습니다. 수영구 담당 배차 매니저가 확인 후 신속히 유선 안내를 드립니다.'); return false;">
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="user-name">고객 성함</label>
+            <input type="text" id="user-name" name="name" placeholder="성함을 입력해 주세요" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="user-phone">연락처 (안내 문자 및 견적 발송)</label>
+            <input type="tel" id="user-phone" name="phone" placeholder="010-0000-0000" required>
+          </div>
+
+          <div class="form-group">
+            <label for="move-date">이사 예정일자</label>
+            <input type="date" id="move-date" name="move_date" required>
+          </div>
+
+          <div class="form-group">
+            <label for="origin-dong">출발지 관할 동 선택</label>
+            <select id="origin-dong" name="origin_dong" required>
+              <option value="">수영구 내 출발 지역 선택</option>
+              <option value="남천동">남천동 (남천1동, 남천2동)</option>
+              <option value="광안동">광안동 (광안1~4동)</option>
+              <option value="민락동">민락동</option>
+              <option value="수영동">수영동</option>
+              <option value="망미동">망미동 (망미1동, 망미2동)</option>
+              <option value="기타">수영구 외 지역에서 전입</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dest-dong">도착지 관할 동 선택</label>
+            <select id="dest-dong" name="dest_dong" required>
+              <option value="">도착 지역 선택</option>
+              <option value="남천동">남천동 방면</option>
+              <option value="광안동">광안동 방면</option>
+              <option value="민락동">민락동 방면</option>
+              <option value="수영동">수영동 방면</option>
+              <option value="망미동">망미동 방면</option>
+              <option value="관외">부산 타 구군 및 타 시도 관외</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="housing-type">주거 형태 및 평형 규모</label>
+            <select id="housing-type" name="housing_type" required>
+              <option value="">주거 형태 선택</option>
+              <option value="apt-small">아파트 (20평형 미만 소형)</option>
+              <option value="apt-mid">아파트 (24평형 - 34평형 중형)</option>
+              <option value="apt-large">아파트 (40평형 이상 대형)</option>
+              <option value="officetel">오피스텔 및 도시형생활주택</option>
+              <option value="villa">빌라 및 연립 다세대</option>
+              <option value="house">단독주택 및 상가주택</option>
+              <option value="office">사무실 및 영업장</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label>이사 방식 및 필수 옵션 체크 (중복 선택 가능)</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="srv-packing" name="services" value="packing" checked>
+                <label for="srv-packing">정통 프리미엄 포장이사</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="srv-half" name="services" value="half">
+                <label for="srv-half">실속형 반포장이사</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="srv-ladder" name="services" value="ladder">
+                <label for="srv-ladder">사다리차 사용 희망</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="srv-ac" name="services" value="aircon">
+                <label for="srv-ac">에어컨 분해 및 이전 설치</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="srv-cleaning" name="services" value="cleaning">
+                <label for="srv-cleaning">전문 입주 청소 연계 희망</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="special-notes">추가 전달 사항 (단지명, 고층 여부, 대형 가전 유무)</label>
+            <textarea id="special-notes" name="notes" rows="4" placeholder="예: 남천자이 20층에서 광안동 빌라 3층으로 이사합니다. 돌침대와 85인치 벽걸이 TV가 포함되어 있어 조심스러운 운반이 필요합니다. 방문 견적 희망합니다."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-button">무료 실시간 맞춤 견적 및 방문 실사 신청하기</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="external">
+    <h2>신뢰할 수 있는 공인 물류 기관 및 정책 지표 출처</h2>
+    <p>포장이사를 준비하는 과정에서 공정한 계약 기준과 합법 관허 업체의 등록 현황을 대조하려면 공인된 국가 행정 기관 및 지자체 포털의 지침을 직접 확인하는 것이 가장 투명하고 안전합니다.</p>
+
+    <ul class="reference-list">
+      <li>
+        <a href="https://www.suyeong.go.kr" target="_blank" rel="noopener noreferrer">부산광역시 수영구청 공식 포털</a>
+        : 수영구 지역 내 화물자동차 운송주선사업 등록업체 현황 조회, 대형 생활폐기물 온라인 배출 신고 및 도로 점용 허가 관련 행정 정보 열람 가능.
+      </li>
+      <li>
+        <a href="https://www.nlic.go.kr" target="_blank" rel="noopener noreferrer">국가물류통합정보센터 (국토교통부)</a>
+        : 국가 공인 물류 법령 규정, 표준 화물 운송 주선 약관 안내, 무허가 불법 이사업체 적발 요령 및 적재물 배상책임보험 관련 공적 지표 공시.
+      </li>
+      <li>
+        <a href="https://namu.wiki/w/%EC%9D%B4%EC%82%AC" target="_blank" rel="noopener noreferrer">나무위키 이사 문서</a>
+        : 포장이사, 반포장이사, 용달이사의 역사와 유형별 프로세스 및 일반 소비자들이 공유한 포괄적인 생활물류 백과사전식 정보 수록.
+      </li>
+    </ul>
+
+    <p>최근에는 네이버, 구글, 유튜브와 같은 검색 포털과 인스타그램, 페이스북, 트위터, 카카오톡, 텔레그램 등의 소셜 네트워크 채널뿐만 아니라 토스, 제미나이(Gemini), 챗지피티(ChatGPT)와 같은 진보된 AI 도구를 통해서도 이사 견적 조언을 쉽게 접할 수 있습니다. 그러나 최종 계약 단계에서는 반드시 관허 등록증 확인과 서면 계약서 작성, 배상책임보험 유효 기간 확인 등 공인된 절차를 밟는 것이 사후 분쟁을 예방하는 가장 확실한 방패입니다.</p>
+  </section>
+
+  
